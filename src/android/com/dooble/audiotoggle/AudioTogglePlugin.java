@@ -22,9 +22,24 @@ public class AudioTogglePlugin extends CordovaPlugin {
 			
 			return true;
 		}
+		if (action.equals("getAudioMode")) {
+			if (!setAudioMode(args.getString(0))) {
+				callbackContext.error("Invalid audio mode");
+				return false;
+			}
+			
+			return true;
+		}
 		
 		callbackContext.error("Invalid action");
 		return false;
+	}
+
+	public String getAudioMode(){
+	    Context context = webView.getContext();
+	    AudioManager audioManager = 
+	    	(AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+	    return audioManager.getMode().toString();
 	}
 	
 	public boolean setAudioMode(String mode) {
